@@ -1,13 +1,12 @@
 // index.js
 const express = require('express');
 const app = express();
-
-app.listen(3000, console.log("SERVER ON"));
-app.use(express.json())
-
 const { obtenerJugadores, registrarJugador } = require('./controllers/jugadores')
 const { obtenerEquipos, agregarEquipo } = require('./controllers/equipos')
 const { generateToken, authenticateToken } = require('./controllers/auth');
+
+app.listen(3000, console.log("SERVER ON"));
+app.use(express.json())
 
 // rutas
 app.post('/login', (req, res) => {

@@ -1,5 +1,5 @@
 const request = require('supertest');
-const app = require('../index'); // Asegúrate de exportar app en index.js
+const app = require('../index'); 
 
 describe('API Tests', () => {
     let token;
@@ -28,7 +28,7 @@ describe('API Tests', () => {
     test('POST /login con credenciales incorrectas debe retornar un status 400', async () => {
         const response = await request(app)
             .post('/login')
-            .send({ username: 'wrong', password: 'wrong' });
+            .send({ username: 'user', password: '434343434' });
         expect(response.statusCode).toBe(400);
     });
 
@@ -38,5 +38,14 @@ describe('API Tests', () => {
             .set('Authorization', `Bearer ${token}`)
             .send({ name: 'Player1', position: 1 });
         expect(response.statusCode).toBe(201);
+    });
+
+    test('POST /equipos con token válido debe retornar un status 201', async () => {
+        const response = await request(app)
+            .post('/equipos')
+            .set('Authorization', `Bearer ${token}`)
+            .send({ name: 'Nuevo Equipo' });
+        expect(response.statusCode).toBe(201);
+        expect(response.body).toEqual({ message: "Equipo agregado con éxito" });
     });
 });
